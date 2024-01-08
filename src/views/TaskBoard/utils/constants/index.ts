@@ -1,0 +1,4 @@
+const LOCAL_STORAGE_KEY = 'task-board';
+const MAX_TASKS_PER_COLUMN = 100;
+
+export { LOCAL_STORAGE_KEY, MAX_TASKS_PER_COLUMN };
