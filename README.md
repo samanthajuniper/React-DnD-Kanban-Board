@@ -16,7 +16,7 @@ The goal of this repo is to demonstrate how I would approach solving a real-worl
 
 ## Demos
 
-### Add Task
+### [Add Task](https://github.com/samanthajuniper/React-DnD-Kanban-Board/blob/main/demos/Add%20Task.gif)
 
 ### Clear Task Form (cancel adding task)
 
