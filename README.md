@@ -16,15 +16,24 @@ The goal of this repo is to demonstrate how I would approach solving a real-worl
 
 ## Demos
 
-### [Add Task](https://github.com/samanthajuniper/React-DnD-Kanban-Board/blob/main/demos/Add%20Task.gif)
+### Add Task 
+![Add Task](https://github.com/samanthajuniper/React-DnD-Kanban-Board/assets/43626685/64a6f86a-9c8f-479b-aacf-9e2f6d9f1edf)
 
 ### Clear Task Form (cancel adding task)
 
+![Clear Task Form](https://github.com/samanthajuniper/React-DnD-Kanban-Board/assets/43626685/bc62cdf2-45fb-4cab-9bab-f35bd392f613)
+
+
 ### Drag and Drop Cards 
+![dnd task](https://github.com/samanthajuniper/React-DnD-Kanban-Board/assets/43626685/5e0e7767-f29e-49b6-bc1a-1f97b5acf5b2)
+
 
 ### Column Max Reached
+![Column Max](https://github.com/samanthajuniper/React-DnD-Kanban-Board/assets/43626685/84179130-3e97-4f02-8d92-5fff2cea51d8)
+
 
 ### Local Storage Persistance
+![Local Storage](https://github.com/samanthajuniper/React-DnD-Kanban-Board/assets/43626685/2afeec3a-3c96-4f74-a453-7517f1ade156)
 
 
 ## Tech Stack
@@ -33,8 +42,6 @@ The goal of this repo is to demonstrate how I would approach solving a real-worl
 - `react-hook-form`: Used for form building & validation
 - `hello-pangea/dnd`: Used to simplify development of drag & drop behavior
 - `chakra-ui`: Used for quick UI building, built-in accessibility, & light weight size. 
-
-
 
 ## Other considerations
 - Performance Optimizations
