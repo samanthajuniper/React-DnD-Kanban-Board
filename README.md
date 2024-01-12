@@ -65,19 +65,77 @@ The goal of this repo is to demonstrate how I would approach solving a real-worl
 
 ## Self Critique
 
-### Positives
+### The Good
+- Repo Structure
+  - File directory is easy to understand at a glance
+  - Simplified imports thanks to index.tsx source files
+  - Separation of concerns (components, utils, etc.)
+    
+ - Mini state normalization (using (Redux pattern)[https://redux.js.org/usage/structuring-reducers/normalizing-state-shape])
+    - It's not as flat as it could be, but given that the scale is very small, I didn't need to implement full normalization. But at scale, it would be a good pattern to follow
+
 - User First Approach
-  I added a few nice touches that make for an overall smoother user experience including:
-    - Required form fields with clear directions in tooltips when data is missing for the add card form
-    - Field validation for the Email field on the add card form to ensure a valid email was entered
-    - Visual warning indicators when a column has reached the 100 card maximum: The add card icon is disabled and if a use tries to drag an existing card to a maxed out column it automatically cancels the drop action, returns the card to its original position, and displays an explanation message on the screen.
+  - Add task form
+    - Field validation & user feedback: required, email structure
+    - Limited char length on title & description
+      - Don't want users to scroll past an extra long task card in the list
+      - Performance minded: don't have to worry about storing potentially infinite strings, in theory = faster load time
+    - Save task button protected against submitting impartial data/making multiple api calls
+    - Not draggable & not included in column scroll
+      - Preserves order so we don't have random form cards mixed in with the list
+      - Since there isn't a column search field, if you wanted to look for existing task names so as not to add a "dupe", you can scroll the static tasks while the form is open
+        - note: no such thing as a true dupe given that all new tasks have a uuid
+  - Column Max # Tasks
+    - Add task icon button disabled + tooltip for user explanation when column max is met
+    - Cards can't be dropped into a column where the max is met
+      - Snackbar appears at bottom of page explaining why to users
+     
+- Performance
+  - Gravatar
+    - Memoized so it doesn't unnecessarily re-render if hashedEmail prop doesn't change (which it never should)
+    - Receives a sha-256 hashed email string instead of calculating it on every render, which helps with performance considering that it's an expensive operation to hash a string client side. An even more ideal approach would be to cache the actual       gravatar image at the src url instead of recreating that url on every render--perhaps something to consider at scale.
+    - DnD within the same column does not re-render all cards within that column's list
+      
+- Local Storage Persistence
+  - Unregistered local storage update event listener to prevent memory leaks
 
-### Improvements
-- Expanding Card Functionality
-  I didn't set myself up for quick iteration in regards to expanding Card functionality. As it currently stands, my component structure separates static card rendering and car creation into different components. In order to allow editing a card, it would be best for me to combine these into one Card component so that I can easily switch back and forth between different views within the same Card component (i.e. using static card data to populate the card form).
+### The Bad
+  - Chakra UI for component building
+    - Pro
+      - Easy to implement Figma designs quickly
+      - Lightweight core package
+      - Accessibility included & keyboard navigation
+     - Cons
+      - I used the style props pattern for styling. Aside from speed, I think these are pretty cumbersome to look at when reading a component file. They just add a lot of extra markup that can be distracting.I did not extract shared styles out into         common reusable props or styled components, but for a large-scale production app I would prioritize that and not rely so heavily on style props
+  - Testing
+    - I'd like to add more unit tests for components, especially for the TaskBoard, Cards, and Column components. I definitely would not release this to production without these. In the interest of time, I added lower value, easy tests so you could       get an idea of my testing approach for component and function unit tests
+  - Duplication
+    - Some of my sub-components could have benefited from an internal component library or a shared styled component in order to reduce duplicate styles and markup
 
-  As mentioned above in the Performance Optimization section, I have some work to do on improving the extra re-renders that happen when moving cards between columns. Ideally, moving a card to a new colunmn would not trigger re-renders for each existing card in that column. 
+### The Ugly
+  - Performance
+    - DnD between columns triggers a re-render of all cards within the target column list
+      - This isn't a huge issue for an app this small, but it definitely would not scale well and isn't the ideal behavior. Can likely be solved with a restructuring of my component tree, making sure prop referential equality is persisting across           renders where it should be, utilizing memoization strategically, or refactoring my state structure and how I’m performing updates
+    - Virtualization of task lists would be nice for performance increase & might help band-aid the bullet point above (dnd supports this!)
+  - Drag and Drop Animations
+    - Very clunky & not smooth enough
+    - Task cards don't preserve the same margin/gap around themselves when first dropped into a new position
+    - Known console warning that I had a hard time resolving: happens when I drag a card, so my guess is that my setup went wrong somewhere with DnD lib
 
+### Future Iterations
+  - Performance
+    - Virtualization with @hello-pangea/dnd
+    - Re-rendering Mitigation
+    - Investigate component-based code splitting. For an app of this size, I'm not sure it's needed, but would be good to look in to.
+  - DnD
+    - Animation styles
+    - Smoothing out transitions
+  - Future Features
+    - Editing, deleting tasks
+    - Custom columns
+    - Column creation
+    - Draggable columns
+    - Task search (by board or column)
+  - Investigate additional security concerns: aside from following basic JSX & React best practices, I didn't get too in the weeds on this topic
+    - Additional data sanitization/validation needed?
 
-### Nice to Haves
-  This project could be expanded in many ways. A few ideas: editing a card, deleting a card, drag & drop columns, column creation, and mobile usage. 
