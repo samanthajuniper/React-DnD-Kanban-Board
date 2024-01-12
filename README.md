@@ -14,6 +14,12 @@ The goal of this repo is to demonstrate how I would approach solving a real-worl
 - Board data is persisted in local storage to allow the changes persist after a refresh (only locally)
 - In case the board is open in two different tabs: whenever something changes on one tab, the others are automatically updated
 
+## Running the project
+- `yarn`
+- `yarn start`
+- `yarn test`: run unit tests
+- `yarn coverage`: run test coverage
+
 ## Demos
 
 ### Add Task 
